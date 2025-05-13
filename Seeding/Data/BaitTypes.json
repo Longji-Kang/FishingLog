@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "Type": "Oozing Floatie"
+    },
+    {
+      "Id": 2,
+      "Type": "Hard Floatie"
+    },
+    {
+      "Id": 3,
+      "Type": "Fluke"
+    },
+    {
+      "Id": 4,
+      "Type": "Trick Worm"
+    },
+    {
+      "Id": 5,
+      "Type": "Crank Bait"
+    },
+    {
+      "Id": 6,
+      "Type": "Dip"
+    },
+    {
+      "Id": 7,
+      "Type": "Ground Feed"
+    },
+    {
+      "Id": 8,
+      "Type": "Mielies"
+    },
+    {
+      "Id": 9,
+      "Type": "Bullets"
+    },
+    {
+      "Id": 10,
+      "Type": "Dough"
+    },
+    {
+      "Id": 11,
+      "Type": "Feed Mix"
+    },
+    {
+      "Id": 12,
+      "Type": "Live"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "Brand": "Signature Series"
+    },
+    {
+      "Id": 2,
+      "Brand": "Supercast"
+    },
+    {
+      "Id": 3,
+      "Brand": "Jumbo"
+    },
+    {
+      "Id": 4,
+      "Brand": "Supercast"
+    },
+    {
+      "Id": 5,
+      "Brand": "Boulyn"
+    },
+    {
+      "Id": 6,
+      "Brand": "Fish"
+    },
+    {
+      "Id": 7,
+      "Brand": "Magic Baits"
+    },
+    {
+      "Id": 8,
+      "Brand": "Conoflex"
+    },
+    {
+      "Id": 9,
+      "Brand": "Trucella"
+    },
+    {
+      "Id": 10,
+      "Brand": "Self"
+    }
+  ]
+}

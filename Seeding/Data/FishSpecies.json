@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "FishSpecie": "Common Carp"
+    },
+    {
+      "Id": 2,
+      "FishSpecie": "Mirror Carp"
+    },
+    {
+      "Id": 3,
+      "FishSpecie": "Grass Carp"
+    },
+    {
+      "Id": 4,
+      "FishSpecie": "Large Mouth Yellow Fish"
+    },
+    {
+      "Id": 5,
+      "FishSpecie": "Small Mouth Yellow Fish"
+    },
+    {
+      "Id": 6,
+      "FishSpecie": "Mudfish"
+    },
+    {
+      "Id": 7,
+      "FishSpecie": "Barbel"
+    },
+    {
+      "Id": 8,
+      "FishSpecie": "Large Mouth Bass"
+    }
+  ]
+}

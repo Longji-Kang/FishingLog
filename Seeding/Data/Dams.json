@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "ProvinceId": 1,
+      "Name": "Rietvlei"
+    },
+    {
+      "Id": 2,
+      "ProvinceId": 1,
+      "Name": "Aston Lake"
+    },
+    {
+      "Id": 3,
+      "ProvinceId": 1,
+      "Name": "Wonderland45"
+    },
+    {
+      "Id": 4,
+      "ProvinceId": 1,
+      "Name": "Struben Dam"
+    },
+    {
+      "Id": 5,
+      "ProvinceId": 1,
+      "Name": "Roodeplaat"
+    },
+    {
+      "Id": 6,
+      "ProvinceId": 1,
+      "Name": "Rietvlei"
+    },
+    {
+      "Id": 7,
+      "ProvinceId": 1,
+      "Name": "Bronkhorstspruit Nature Reserve"
+    },
+    {
+      "Id": 8,
+      "ProvinceId": 1,
+      "Name": "Bajadam"
+    },
+    {
+      "Id": 9,
+      "ProvinceId": 5,
+      "Name": "Rapids Paradise"
+    },
+    {
+      "Id": 10,
+      "ProvinceId": 5,
+      "Name": "Oranjeville"
+    },
+    {
+      "Id": 11,
+      "ProvinceId": 5,
+      "Name": "Vaal Marina"
+    }
+  ]
+}

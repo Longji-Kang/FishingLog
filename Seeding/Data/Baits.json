@@ -1,0 +1,322 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "BrandId": 5,
+      "BaitTypeId": 7,
+      "Description": "Boulyn Kolletjie"
+    },
+    {
+      "Id": 2,
+      "BrandId": 2,
+      "BaitTypeId": 2,
+      "Description": "Perdeby"
+    },
+    {
+      "Id": 3,
+      "BrandId": 2,
+      "BaitTypeId": 2,
+      "Description": "Plain White"
+    },
+    {
+      "Id": 4,
+      "BrandId": 2,
+      "BaitTypeId": 2,
+      "Description": "Plain Yellow"
+    },
+    {
+      "Id": 5,
+      "BrandId": 2,
+      "BaitTypeId": 1,
+      "Description": "Pandemonium"
+    },
+    {
+      "Id": 6,
+      "BrandId": 2,
+      "BaitTypeId": 1,
+      "Description": "Fire and Ice"
+    },
+    {
+      "Id": 7,
+      "BrandId": 2,
+      "BaitTypeId": 1,
+      "Description": "Garlic"
+    },
+    {
+      "Id": 8,
+      "BrandId": 6,
+      "BaitTypeId": 1,
+      "Description": "Garlic"
+    },
+    {
+      "Id": 9,
+      "BrandId": 6,
+      "BaitTypeId": 1,
+      "Description": "Legend"
+    },
+    {
+      "Id": 10,
+      "BrandId": 6,
+      "BaitTypeId": 1,
+      "Description": "Sniper"
+    },
+    {
+      "Id": 11,
+      "BrandId": 6,
+      "BaitTypeId": 1,
+      "Description": "Banjo"
+    },
+    {
+      "Id": 12,
+      "BrandId": 3,
+      "BaitTypeId": 1,
+      "Description": "Banana"
+    },
+    {
+      "Id": 13,
+      "BrandId": 3,
+      "BaitTypeId": 1,
+      "Description": "Perdeby"
+    },
+    {
+      "Id": 14,
+      "BrandId": 7,
+      "BaitTypeId": 1,
+      "Description": "HLX"
+    },
+    {
+      "Id": 15,
+      "BrandId": 7,
+      "BaitTypeId": 1,
+      "Description": "Alm X"
+    },
+    {
+      "Id": 16,
+      "BrandId": 8,
+      "BaitTypeId": 2,
+      "Description": "Chop Chop"
+    },
+    {
+      "Id": 17,
+      "BrandId": 7,
+      "BaitTypeId": 1,
+      "Description": "Alm X"
+    },
+    {
+      "Id": 18,
+      "BrandId": 1,
+      "BaitTypeId": 1,
+      "Description": "Level 5"
+    },
+    {
+      "Id": 19,
+      "BrandId": 1,
+      "BaitTypeId": 1,
+      "Description": "SWG"
+    },
+    {
+      "Id": 20,
+      "BrandId": 1,
+      "BaitTypeId": 1,
+      "Description": "F2 Fifty"
+    },
+    {
+      "Id": 21,
+      "BrandId": 1,
+      "BaitTypeId": 1,
+      "Description": "Tjop Tjop"
+    },
+    {
+      "Id": 22,
+      "BrandId": 1,
+      "BaitTypeId": 1,
+      "Description": "DKW"
+    },
+    {
+      "Id": 23,
+      "BrandId": 1,
+      "BaitTypeId": 2,
+      "Description": "Banlick"
+    },
+    {
+      "Id": 24,
+      "BrandId": 1,
+      "BaitTypeId": 2,
+      "Description": "Garlic"
+    },
+    {
+      "Id": 25,
+      "BrandId": 1,
+      "BaitTypeId": 9,
+      "Description": "Level 5"
+    },
+    {
+      "Id": 26,
+      "BrandId": 6,
+      "BaitTypeId": 9,
+      "Description": "Perdeby"
+    },
+    {
+      "Id": 27,
+      "BrandId": 2,
+      "BaitTypeId": 8,
+      "Description": "Tutti Frutti"
+    },
+    {
+      "Id": 28,
+      "BrandId": 2,
+      "BaitTypeId": 8,
+      "Description": "Gumtree"
+    },
+    {
+      "Id": 29,
+      "BrandId": 2,
+      "BaitTypeId": 8,
+      "Description": "Vaaldam"
+    },
+    {
+      "Id": 30,
+      "BrandId": 2,
+      "BaitTypeId": 8,
+      "Description": "Caramel"
+    },
+    {
+      "Id": 31,
+      "BrandId": 6,
+      "BaitTypeId": 6,
+      "Description": "Honey High Attract Liquid"
+    },
+    {
+      "Id": 32,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Stinkvoete"
+    },
+    {
+      "Id": 33,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Schalas"
+    },
+    {
+      "Id": 34,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Honey Glow"
+    },
+    {
+      "Id": 35,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Schalas"
+    },
+    {
+      "Id": 36,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Tjop Tjop"
+    },
+    {
+      "Id": 37,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Almond S"
+    },
+    {
+      "Id": 38,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Kiana"
+    },
+    {
+      "Id": 39,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Gumtree"
+    },
+    {
+      "Id": 40,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Perdeby"
+    },
+    {
+      "Id": 41,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Banji"
+    },
+    {
+      "Id": 42,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "Legend"
+    },
+    {
+      "Id": 43,
+      "BrandId": 2,
+      "BaitTypeId": 6,
+      "Description": "FX"
+    },
+    {
+      "Id": 44,
+      "BrandId": 9,
+      "BaitTypeId": 6,
+      "Description": "Hot Honey"
+    },
+    {
+      "Id": 45,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "Turbo Garlic"
+    },
+    {
+      "Id": 46,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "Juliass"
+    },
+    {
+      "Id": 47,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "Plakker"
+    },
+    {
+      "Id": 48,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "Agmed"
+    },
+    {
+      "Id": 49,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "Hoekom Bloekom"
+    },
+    {
+      "Id": 50,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "HKGK"
+    },
+    {
+      "Id": 51,
+      "BrandId": 1,
+      "BaitTypeId": 6,
+      "Description": "Raptor"
+    },
+    {
+      "Id": 52,
+      "BrandId": 1,
+      "BaitTypeId": 11,
+      "Description": "Level 5 Feedmix"
+    },
+    {
+      "Id": 53,
+      "BrandId": 10,
+      "BaitTypeId": 12,
+      "Description": "African Night Crawlers"
+    }
+  ]
+}
