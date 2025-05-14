@@ -1,18 +1,11 @@
 ﻿using Fishing_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 
 namespace Fishing_API.Seeding.Seeders {
-    public class BaitBrandSeeder : ISeeder<BaitBrandModel> {
-        private List<BaitBrandModel> _baitBrandModels;
-
-        private const string _FileLocation = "BaitBrands.json";
-
-        public BaitBrandSeeder() {
-            _baitBrandModels = new List<BaitBrandModel>();
-        }
+    public class BaitSeeder : ISeeder<BaitModel> {
+        private const string _FileLocation = "Baits.json";
 
         public void seed(ModelBuilder modelBuilder, string execPath) {
             string seedDataPath = $"{execPath}/Seeding/Data/{_FileLocation}";
@@ -28,16 +21,18 @@ namespace Fishing_API.Seeding.Seeders {
                     if (seedDataNode != null) {
                         foreach (JsonNode curr in seedDataNode!) {
                             int id = curr["Id"]!.GetValue<int>();
-                            string brand = curr["Brand"]!.ToString();
+                            int brandId = curr["BrandId"]!.GetValue<int>();
+                            int baitTypeId = curr["BaitTypeId"]!.GetValue<int>();
+                            string description = curr["Description"]!.ToString();
 
-                            BaitBrandModel baitBrandModel = new BaitBrandModel();
-                            baitBrandModel.Id = id;
-                            baitBrandModel.Brand = brand;
+                            BaitModel baitModel = new BaitModel();
+                            baitModel.Id = id;
+                            baitModel.BrandId = brandId;
+                            baitModel.BaitTypeId = baitTypeId;
+                            baitModel.Description = description;
 
-                            _baitBrandModels.Add(baitBrandModel);
-
-                            modelBuilder.Entity<BaitBrandModel>(m => {
-                                m.HasData(baitBrandModel);
+                            modelBuilder.Entity<BaitModel>(m => {
+                                m.HasData(baitModel);
                             });
                         }
                     } else {

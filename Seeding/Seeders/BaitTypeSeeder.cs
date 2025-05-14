@@ -1,17 +1,15 @@
 ﻿using Fishing_API.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
-using System.Runtime.CompilerServices;
 using System.Text.Json.Nodes;
 
 namespace Fishing_API.Seeding.Seeders {
-    public class BaitBrandSeeder : ISeeder<BaitBrandModel> {
-        private List<BaitBrandModel> _baitBrandModels;
+    public class BaitTypeSeeder : ISeeder<BaitTypeModel> {
+        private List<BaitTypeModel> _baitTypeList;
 
-        private const string _FileLocation = "BaitBrands.json";
+        private const string _FileLocation = "BaitTypes.json";
 
-        public BaitBrandSeeder() {
-            _baitBrandModels = new List<BaitBrandModel>();
+        public BaitTypeSeeder() {
+            _baitTypeList = new List<BaitTypeModel>();
         }
 
         public void seed(ModelBuilder modelBuilder, string execPath) {
@@ -28,16 +26,16 @@ namespace Fishing_API.Seeding.Seeders {
                     if (seedDataNode != null) {
                         foreach (JsonNode curr in seedDataNode!) {
                             int id = curr["Id"]!.GetValue<int>();
-                            string brand = curr["Brand"]!.ToString();
+                            string type = curr["Type"]!.ToString();
 
-                            BaitBrandModel baitBrandModel = new BaitBrandModel();
-                            baitBrandModel.Id = id;
-                            baitBrandModel.Brand = brand;
+                            BaitTypeModel baitTypeModel = new BaitTypeModel();
+                            baitTypeModel.Id = id;
+                            baitTypeModel.Type = type;
 
-                            _baitBrandModels.Add(baitBrandModel);
+                            _baitTypeList.Add(baitTypeModel);
 
-                            modelBuilder.Entity<BaitBrandModel>(m => {
-                                m.HasData(baitBrandModel);
+                            modelBuilder.Entity<BaitTypeModel>(m => {
+                                m.HasData(baitTypeModel);
                             });
                         }
                     } else {

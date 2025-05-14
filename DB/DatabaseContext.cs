@@ -25,8 +25,17 @@ namespace Fishing_API.DB {
             /*
              ** Generate objects from JSON documents
              */
+            /* Bait Brands */
             BaitBrandSeeder baitBrandSeeder = new BaitBrandSeeder();
             baitBrandSeeder.seed(modelBuilder, workingDir);
+
+            /* Bait Types */
+            BaitTypeSeeder baitTypeSeeder = new BaitTypeSeeder();
+            baitTypeSeeder.seed(modelBuilder, workingDir);
+
+            /* Baits */
+            BaitSeeder baitSeeder = new BaitSeeder();
+            baitSeeder.seed(modelBuilder, workingDir);
         }
     }
 }

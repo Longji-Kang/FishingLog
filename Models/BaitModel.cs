@@ -4,10 +4,14 @@ namespace Fishing_API.Models {
     public class BaitModel {
         public int Id { get; set; }
         [Required]
-        public required BaitBrandModel Brand { get; set; }
+        public int BrandId { get; set; }
         [Required]
-        public required BaitTypeModel BaitType { get; set; }
+        public BaitBrandModel Brand { get; set; }
         [Required]
-        public required string Description { get; set; }
+        public int BaitTypeId { get; set; }
+        [Required]
+        public BaitTypeModel BaitType { get; set; }
+        [Required]
+        public string Description { get; set; }
     }
 }
