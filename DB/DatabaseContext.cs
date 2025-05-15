@@ -36,6 +36,18 @@ namespace Fishing_API.DB {
             /* Baits */
             BaitSeeder baitSeeder = new BaitSeeder();
             baitSeeder.seed(modelBuilder, workingDir);
+
+            /* Rigs */
+            RigSeeder rigSeeder = new RigSeeder();
+            rigSeeder.seed(modelBuilder, workingDir);
+
+            /* Provinces */
+            ProvincesSeeder provincesSeeder = new ProvincesSeeder();
+            provincesSeeder.seed(modelBuilder, workingDir);
+
+            /* Dams */
+            DamSeeder damSeeder = new DamSeeder();
+            damSeeder.seed(modelBuilder, workingDir);
         }
     }
 }
