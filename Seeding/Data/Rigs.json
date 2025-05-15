@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "RigName": "Sliding Rietvlei"
+    },
+    {
+      "Id": 2,
+      "RigName": "Sliding Rietvlei Single Hook"
+    },
+    {
+      "Id": 3,
+      "RigName": "Weedless Texas"
+    },
+    {
+      "Id": 4,
+      "RigName": "None"
+    }
+  ]
+}

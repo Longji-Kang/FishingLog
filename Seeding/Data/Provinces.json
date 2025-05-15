@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "Id": 1,
+      "ProvinceName": "Gauteng"
+    },
+    {
+      "Id": 2,
+      "ProvinceName": "Limpopo"
+    },
+    {
+      "Id": 3,
+      "ProvinceName": "North-West"
+    },
+    {
+      "Id": 4,
+      "ProvinceName": "Mpumalanga"
+    },
+    {
+      "Id": 5,
+      "ProvinceName": "Free State"
+    },
+    {
+      "Id": 6,
+      "ProvinceName": "Kwazulu Natal"
+    },
+    {
+      "Id": 7,
+      "ProvinceName": "Northern Cape"
+    },
+    {
+      "Id": 8,
+      "ProvinceName": "Western Cape"
+    },
+    {
+      "Id": 9,
+      "ProvinceName": "Eastern Cape"
+    }
+  ]
+}
