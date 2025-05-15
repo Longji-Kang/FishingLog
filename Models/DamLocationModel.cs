@@ -4,8 +4,10 @@ namespace Fishing_API.Models {
     public class DamLocationModel {
         public int Id { get; set; }
         [Required]
-        public required DamModel Dam { get; set; }
+        public int DamId { get; set; }
         [Required]
-        public required string Location {  get; set; }
+        public DamModel Dam { get; set; }
+        [Required]
+        public string Location {  get; set; }
     }
 }
