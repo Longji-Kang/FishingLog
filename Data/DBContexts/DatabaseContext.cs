@@ -14,7 +14,7 @@ namespace Fishing_API.Data.DBContexts {
         public DbSet<DamLocationModel> DamLocations { get; set; }
         public DbSet<BaitModel> Baits { get; set; }
         public DbSet<WeatherModel> Weather { get; set; }
-        public DbSet<LogModel> LogModels { get; set; }
+        public DbSet<LogModel> Logs { get; set; }
         public DbSet<BaitLogRelationModel> BaitLogRelations { get; set; }
 
         public DatabaseContext(DbContextOptions options) : base(options) {}
