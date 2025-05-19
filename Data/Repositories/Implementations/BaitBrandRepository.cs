@@ -35,11 +35,13 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<BaitBrandModel?> Update(BaitBrandModel entity) {
+        public async Task<BaitBrandModel?> Update(BaitBrandModel entity, BaitBrandModel updatedEntity) {
             BaitBrandModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
-                _databaseContext.BaitBrands.Update(entity);
+                dbEntry.Brand = updatedEntity.Brand;
+
+                _databaseContext.BaitBrands.Update(dbEntry);
                 await _databaseContext.SaveChangesAsync();
 
                 return dbEntry;
