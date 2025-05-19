@@ -50,20 +50,123 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
-        public Task<BaitModel[]> List(BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            throw new NotImplementedException();
+        public async Task<BaitModel[]> List(BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
+            IQueryable<BaitModel> baits;
+
+            if (lastEntity == null) {
+                baits = _databaseContext.Baits
+                    .OrderBy(b => b.Description)
+                    .ThenBy(b => b.BrandId)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            } else {
+                baits = _databaseContext.Baits
+                    .Where(b => b.Id > lastEntity.Id)
+                    .OrderBy(b => b.Description)
+                    .ThenBy(b => b.BrandId)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            }
+
+            if (includeNestedObjects) {
+                return await baits
+                    .Include(b => b.Brand)
+                    .Include(b => b.BaitType)
+                    .ToArrayAsync();
+            } else {
+                return await baits.ToArrayAsync();
+            }
         }
 
-        public Task<BaitModel[]> ListBaitsByBrand(int brandId, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            throw new NotImplementedException();
+        public async Task<BaitModel[]> ListBaitsByBrand(int brandId, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
+            IQueryable<BaitModel> baits;
+            
+            if (lastEntity == null) {
+                baits = _databaseContext.Baits
+                    .Where(b => b.BrandId == brandId)
+                    .OrderBy(b => b.Description)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            } else {
+                baits = _databaseContext.Baits
+                    .Where(b => b.BrandId == brandId && b.Id > lastEntity.Id)
+                    .OrderBy(b => b.Description)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            }
+
+            if (includeNestedObjects) {
+                return await baits
+                    .Include(b => b.Brand)
+                    .Include(b => b.BaitType)
+                    .ToArrayAsync();
+            } else {
+                return await baits.ToArrayAsync();
+            }
         }
 
-        public Task<BaitModel[]> ListBaitsByDescription(string description, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            throw new NotImplementedException();
+        public async Task<BaitModel[]> ListBaitsByDescription(string description, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
+            IQueryable<BaitModel> baits;
+
+            if (lastEntity == null) {
+                baits = _databaseContext.Baits
+                    .Where(b => b.Description == description)
+                    .OrderBy(b => b.BrandId)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            } else {
+                baits = _databaseContext.Baits
+                    .Where(b => b.Description == description && b.Id > lastEntity.Id)
+                    .OrderBy(b => b.BrandId)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            }
+
+            if (includeNestedObjects) {
+                return await baits
+                    .Include(b => b.Brand)
+                    .Include(b => b.BaitType)
+                    .ToArrayAsync();
+            } else {
+                return await baits.ToArrayAsync();
+            }
         }
 
-        public Task<BaitModel[]> ListBaitsByType(int typeId, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            throw new NotImplementedException();
+        public async Task<BaitModel[]> ListBaitsByType(int typeId, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
+            IQueryable<BaitModel> baits;
+
+            if (lastEntity == null) {
+                baits = _databaseContext.Baits
+                    .Where(b => b.BaitTypeId == typeId)
+                    .OrderBy(b => b.Description)
+                    .ThenBy(b => b.BrandId)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            } else {
+                baits = _databaseContext.Baits
+                    .Where(b => b.BaitTypeId == typeId && b.Id > lastEntity.Id)
+                    .OrderBy(b => b.Description)
+                    .ThenBy(b => b.BrandId)
+                    .ThenBy(b => b.BaitTypeId)
+                    .ThenBy(b => b.Id)
+                    .Take(pageSize);
+            }
+
+            if (includeNestedObjects) {
+                return await baits
+                    .Include(b => b.Brand)
+                    .Include(b => b.BaitType)
+                    .ToArrayAsync();
+            } else {
+                return await baits.ToArrayAsync();
+            }
         }
     }
 }

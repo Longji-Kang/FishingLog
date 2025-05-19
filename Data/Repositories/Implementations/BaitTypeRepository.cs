@@ -67,8 +67,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
                     .ToArrayAsync();
             } else {
                 return await _databaseContext.BaitTypes
+                     .Where(bt => bt.Id > lastEntity.Id)
                     .OrderBy(x => x.Type)
-                    .Where(bt => bt.Id > lastEntity.Id)
                     .Take(pageSize)
                     .ToArrayAsync();
             }
