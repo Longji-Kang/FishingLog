@@ -1,8 +1,9 @@
 ﻿using Fishing_API.Data.DBContexts;
+using Fishing_API.Data.Repositories.Interfaces;
 using Fishing_API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fishing_API.Data.Repositories.Interfaces {
+namespace Fishing_API.Data.Repositories.Implementations {
     public class BaitBrandRepository : IFishingRepository<BaitBrandModel> {
         private readonly DatabaseContext _databaseContext;
 
