@@ -57,5 +57,20 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
             return baitBrand;
         }
+
+        public async Task<BaitBrandModel[]> List(BaitBrandModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
+            if (lastEntity == null) {
+                return await _databaseContext.BaitBrands
+                    .OrderBy(b => b.Brand)
+                    .Take(pageSize)
+                    .ToArrayAsync();
+            } else {
+                return await _databaseContext.BaitBrands
+                    .OrderBy(b => b.Brand)
+                    .Where(b => b.Id > lastEntity.Id)
+                    .Take(pageSize)
+                    .ToArrayAsync();
+            }
+        }
     }
 }
