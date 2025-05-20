@@ -8,6 +8,6 @@ namespace Fishing_API.Data.Repositories.Interfaces {
         public Task<T?> Remove(T entity);
         public Task<T?> Update(T entity, T updatedEntity);
         public Task<T?> Find(T entity, bool includeNestedObjects = false);
-        public Task<PageListModel<T>> List(T? lastEntity = default, bool includeNestedObjects = false, int pageSize = 10);
+        public Task<PageListModel<T>> List(int currentPage, bool includeNestedObjects = false, int pageSize = 10);
     }
 }
