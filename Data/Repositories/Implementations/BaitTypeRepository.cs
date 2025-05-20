@@ -1,5 +1,6 @@
 ﻿using Fishing_API.Data.DBContexts;
 using Fishing_API.Data.Repositories.Interfaces;
+using Fishing_API.Models.ApiModels;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,25 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return dbEntry;
         }
 
+        public async Task<PageListModel<BaitTypeModel>> List(int currentPage, bool includeNestedObjects = false, int pageSize = 20) {
+            IQueryable<BaitTypeModel> type = _databaseContext.BaitTypes
+                .OrderBy(bt => bt.Type);
+
+            int total = (int)(Math.Ceiling((float)(await type.CountAsync()) / pageSize));
+
+            type
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize);
+
+            ICollection<BaitTypeModel> data = await type.ToListAsync();
+
+            return new PageListModel<BaitTypeModel> {
+                CurrentPage = currentPage,
+                TotalPages = total,
+                Data = data
+            };       
+        }
+
         public async Task<BaitTypeModel?> Remove(BaitTypeModel entity) {
             BaitTypeModel? dbEntry = await Find(entity);
 
@@ -56,21 +76,6 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 return dbEntry;
             } else {
                 return null;
-            }
-        }
-
-        public async Task<BaitTypeModel[]> List(BaitTypeModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            if (lastEntity == null) {
-                return await _databaseContext.BaitTypes
-                    .OrderBy(x => x.Type)
-                    .Take(pageSize)
-                    .ToArrayAsync();
-            } else {
-                return await _databaseContext.BaitTypes
-                     .Where(bt => bt.Id > lastEntity.Id)
-                    .OrderBy(x => x.Type)
-                    .Take(pageSize)
-                    .ToArrayAsync();
             }
         }
     }

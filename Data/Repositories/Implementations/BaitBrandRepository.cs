@@ -1,5 +1,6 @@
 ﻿using Fishing_API.Data.DBContexts;
 using Fishing_API.Data.Repositories.Interfaces;
+using Fishing_API.Models.ApiModels;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,19 +59,26 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return baitBrand;
         }
 
-        public async Task<BaitBrandModel[]> List(BaitBrandModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            if (lastEntity == null) {
-                return await _databaseContext.BaitBrands
-                    .OrderBy(b => b.Brand)
-                    .Take(pageSize)
-                    .ToArrayAsync();
-            } else {
-                return await _databaseContext.BaitBrands
-                    .Where(b => b.Id > lastEntity.Id)
-                    .OrderBy(b => b.Brand)
-                    .Take(pageSize)
-                    .ToArrayAsync();
-            }
+        /*
+         * Check currentPage <= totalPages at API level
+         */
+        public async Task<PageListModel<BaitBrandModel>> List(int currentPage, bool includeNestedObjects = false, int pageSize = 20) {
+            IQueryable<BaitBrandModel> brands = _databaseContext.BaitBrands
+                .OrderBy(b => b.Brand);
+
+            int totalPages = (int)Math.Ceiling((float)(await brands.CountAsync()) / pageSize);
+
+            brands
+                .Skip((currentPage - 1) * pageSize)
+                .Take(totalPages);
+
+            ICollection<BaitBrandModel> data = await brands.ToListAsync();
+
+            return new PageListModel<BaitBrandModel>{
+                CurrentPage = currentPage,
+                TotalPages = totalPages,
+                Data = data
+            };
         }
     }
 }
