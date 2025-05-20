@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Fishing_API.Models {
+namespace Fishing_API.Models.DatabaseModels {
     public class BaitModel {
         public int Id { get; set; }
         [Required]

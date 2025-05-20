@@ -1,4 +1,4 @@
-﻿using Fishing_API.Models;
+﻿using Fishing_API.Models.DatabaseModels;
 using Fishing_API.Seeding.Seeders;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
