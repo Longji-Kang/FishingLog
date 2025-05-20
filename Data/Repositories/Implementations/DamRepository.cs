@@ -41,13 +41,10 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
 
             if (includeNestedObjects) {
-                return await _databaseContext.Dam
-                    .Include(d => d.Province)
-                    .ToArrayAsync();
-            } else {
-                return await _databaseContext.Dam
-                    .ToArrayAsync();
-            }
+                dams.Include(d => d.Province);
+            } 
+
+            return await dams.ToArrayAsync();
         }
 
         public async Task<DamModel[]> ListByProvince(int provinceId, DamModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
@@ -68,13 +65,10 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
 
             if (includeNestedObjects) {
-                return await _databaseContext.Dam
-                    .Include(d => d.Province)
-                    .ToArrayAsync();
-            } else {
-                return await _databaseContext.Dam
-                    .ToArrayAsync();
+                dams.Include(d => d.Province);
             }
+
+            return await dams.ToArrayAsync();
         }
 
         public async Task<DamModel?> Remove(DamModel entity) {

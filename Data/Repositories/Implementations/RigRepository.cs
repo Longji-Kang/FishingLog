@@ -43,12 +43,32 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return await rigs.ToArrayAsync();
         }
 
-        public Task<RigsModel?> Remove(RigsModel entity) {
-            throw new NotImplementedException();
+        public async Task<RigsModel?> Remove(RigsModel entity) {
+            RigsModel? dbEntry = await Find(entity);
+
+            if (dbEntry != null) {
+                _databaseContext.Rigs.Remove(dbEntry);
+                await _databaseContext.SaveChangesAsync();
+
+                return dbEntry;
+            } else {
+                return null;
+            }
         }
 
-        public Task<RigsModel?> Update(RigsModel entity, RigsModel updatedEntity) {
-            throw new NotImplementedException();
+        public async Task<RigsModel?> Update(RigsModel entity, RigsModel updatedEntity) {
+            RigsModel? dbEntry = await Find(entity);
+
+            if (dbEntry != null) {
+                dbEntry.RigName = updatedEntity.RigName;
+
+                _databaseContext.Rigs.Update(dbEntry);
+                await _databaseContext.SaveChangesAsync();
+
+                return dbEntry;
+            } else {
+                return null;
+            }
         }
     }
 }
