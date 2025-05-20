@@ -35,7 +35,13 @@ namespace Fishing_API.Data.Repositories.Implementations {
             BaitModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
-                _databaseContext.Baits.Remove(dbEntry);
+                dbEntry.BrandId = updatedEntity.BrandId;
+                dbEntry.Brand = updatedEntity.Brand;
+                dbEntry.BaitTypeId = updatedEntity.BaitTypeId;
+                dbEntry.BaitType = updatedEntity.BaitType;
+                dbEntry.Description = updatedEntity.Description;
+
+                _databaseContext.Baits.Update(dbEntry);
                 await _databaseContext.SaveChangesAsync();
 
                 return dbEntry;
