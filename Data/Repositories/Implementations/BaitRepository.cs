@@ -4,7 +4,7 @@ using Fishing_API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class BaitRepository(DatabaseContext databaseContext) : IBaitRepository<BaitModel> {
+    public class BaitRepository(DatabaseContext databaseContext) : IBaitRepository {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         public async Task<BaitModel?> Add(BaitModel entity) {
