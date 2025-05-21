@@ -6,7 +6,7 @@ namespace Fishing_API.Models.DatabaseModels {
         [Required]
         public int FishSpecieId { get; set; }
         [Required]
-        public FishSpeciesModel? FishSpecie {  get; set; }
+        public FishSpeciesModel? FishSpecie { get; set; }
         [Required]
         public int RigsId { get; set; }
         [Required]

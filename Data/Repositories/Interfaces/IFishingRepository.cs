@@ -11,7 +11,7 @@ namespace Fishing_API.Data.Repositories.Interfaces {
          * Check currentPage <= totalPages at API level
          * Default implementation for models with no nested objects
          */
-        public Task<IQueryable<T>> ListQuery(bool includeNestedObjects = false);
+        public IQueryable<T> ListQuery(bool includeNestedObjects = false);
         /*
          * Default implementation for models with no nested objects
          */

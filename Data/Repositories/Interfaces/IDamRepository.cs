@@ -6,6 +6,6 @@ namespace Fishing_API.Data.Repositories.Interfaces {
         /*
          * Check currentPage <= totalPages at API level
          */
-        public Task<IQueryable<DamModel>> ListByProvince(int provinceId, bool includeNestedObjects = false);
+        public IQueryable<DamModel> ListByProvince(int provinceId, bool includeNestedObjects = false);
     }
 }

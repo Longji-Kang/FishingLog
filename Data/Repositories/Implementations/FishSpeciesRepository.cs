@@ -25,8 +25,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
-        public override Task<IQueryable<FishSpeciesModel>> ListQuery(bool includeNestedObjects = false) {
-            return (Task<IQueryable<FishSpeciesModel>>)_databaseContext.FishSpecies
+        public override IQueryable<FishSpeciesModel> ListQuery(bool includeNestedObjects = false) {
+            return _databaseContext.FishSpecies
                 .OrderBy(f => f.FishSpecie);
         }
 

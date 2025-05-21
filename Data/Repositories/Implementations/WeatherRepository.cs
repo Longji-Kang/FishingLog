@@ -25,8 +25,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
-        public override Task<IQueryable<WeatherModel>> ListQuery(bool includeNestedObjects = false) {
-            return (Task<IQueryable<WeatherModel>>)_databaseContext.Weather
+        public override IQueryable<WeatherModel> ListQuery(bool includeNestedObjects = false) {
+            return _databaseContext.Weather
                 .OrderBy(w => w.Weather);
         }
 

@@ -28,7 +28,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
-        public Task<IQueryable<DamLocationModel>> ListByDam(int damId, bool includeNestedObjects = false) {
+        public IQueryable<DamLocationModel> ListByDam(int damId, bool includeNestedObjects = false) {
             IQueryable<DamLocationModel> damLocations = _databaseContext.DamLocations
                 .Where(dl => dl.DamId == damId)
                 .OrderBy(dl => dl.Location);
@@ -37,10 +37,10 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 damLocations.Include(dl => dl.Dam);
             }
 
-            return (Task<IQueryable<DamLocationModel>>) damLocations;
+            return damLocations;
         }
 
-        public override Task<IQueryable<DamLocationModel>> ListQuery(bool includeNestedObjects = false) {
+        public override IQueryable<DamLocationModel> ListQuery(bool includeNestedObjects = false) {
             IQueryable<DamLocationModel> damLocations = _databaseContext.DamLocations
                 .OrderBy(dl => dl.DamId)
                 .ThenBy(dl => dl.Location);
@@ -49,7 +49,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 damLocations.Include(dl => dl.Dam);
             }
 
-            return (Task<IQueryable<DamLocationModel>>)damLocations;
+            return damLocations;
         }
 
         public override async Task<DamLocationModel?> Remove(DamLocationModel entity) {

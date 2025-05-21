@@ -6,7 +6,7 @@ namespace Fishing_API.Data.Repositories.Abstracts {
     public abstract class FishingInterfaceAbstract<T> : IFishingRepository<T> {
         public abstract Task<T?> Add(T entity);
         public abstract Task<T?> Find(T entity, bool includeNestedObjects = false);
-        public abstract Task<IQueryable<T>> ListQuery(bool includeNestedObjects = false);
+        public abstract IQueryable<T> ListQuery(bool includeNestedObjects = false);
         public abstract Task<T?> Remove(T entity);
         public abstract Task<T?> Update(T entity, T updatedEntity);
         public async Task<PageListModel<T>> List(IQueryable<T> query, int currentPage, int pageSize = 20) {

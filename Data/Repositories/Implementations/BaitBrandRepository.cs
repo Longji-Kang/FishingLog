@@ -58,8 +58,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return baitBrand;
         }
 
-        public override Task<IQueryable<BaitBrandModel>> ListQuery(bool includeNestedObjects = false) {
-            return (Task<IQueryable<BaitBrandModel>>)_databaseContext.BaitBrands
+        public override IQueryable<BaitBrandModel> ListQuery(bool includeNestedObjects = false) {
+            return _databaseContext.BaitBrands
                 .OrderBy(b => b.Brand);
         }
     }
