@@ -6,8 +6,8 @@ namespace Fishing_API.Models.DatabaseModels {
         [Required]
         public int DamId { get; set; }
         [Required]
-        public DamModel Dam { get; set; }
+        public DamModel? Dam { get; set; }
         [Required]
-        public string Location {  get; set; }
+        public string? Location {  get; set; }
     }
 }

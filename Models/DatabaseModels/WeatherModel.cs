@@ -5,6 +5,6 @@ namespace Fishing_API.Models.DatabaseModels {
         public int Id { get; set; }
 
         [Required]
-        public string Weather { get; set; }
+        public string? Weather { get; set; }
     }
 }

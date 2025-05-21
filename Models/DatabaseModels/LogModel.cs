@@ -6,24 +6,24 @@ namespace Fishing_API.Models.DatabaseModels {
         [Required]
         public int FishSpecieId { get; set; }
         [Required]
-        public required FishSpeciesModel FishSpecie {  get; set; }
+        public FishSpeciesModel? FishSpecie {  get; set; }
         [Required]
         public int RigsId { get; set; }
         [Required]
-        public required RigsModel Rigs { get; set; }
+        public RigsModel? Rigs { get; set; }
         [Required]
         public int DamLocationId { get; set; }
         [Required]
-        public required DamLocationModel DamLocation { get; set; }
+        public DamLocationModel? DamLocation { get; set; }
         [Required]
         public int WeatherId { get; set; }
         [Required]
-        public required WeatherModel Weather { get; set; }
+        public WeatherModel? Weather { get; set; }
         [Required]
-        public required int Temperature { get; set; }
+        public int Temperature { get; set; }
         [Required]
-        public required DateOnly Day { get; set; }
+        public DateOnly Day { get; set; }
         [Required]
-        public required TimeOnly Time { get; set; }
+        public TimeOnly Time { get; set; }
     }
 }
