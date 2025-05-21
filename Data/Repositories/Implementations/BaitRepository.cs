@@ -1,13 +1,15 @@
 ﻿using Fishing_API.Data.DBContexts;
+using Fishing_API.Data.Repositories.Abstracts;
 using Fishing_API.Data.Repositories.Interfaces;
+using Fishing_API.Models.ApiModels;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class BaitRepository(DatabaseContext databaseContext) : IBaitRepository {
+    public class BaitRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<BaitModel>, IBaitRepository {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
-        public async Task<BaitModel?> Add(BaitModel entity) {
+        public override async Task<BaitModel?> Add(BaitModel entity) {
             if (Find(entity) == null) {
                 BaitModel dbEntry = (await _databaseContext.Baits.AddAsync(entity)).Entity;
                 await _databaseContext.SaveChangesAsync();
@@ -18,7 +20,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<BaitModel?> Remove(BaitModel entity) {
+        public override async Task<BaitModel?> Remove(BaitModel entity) {
             BaitModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
@@ -31,7 +33,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<BaitModel?> Update(BaitModel entity, BaitModel updatedEntity) {
+        public override async Task<BaitModel?> Update(BaitModel entity, BaitModel updatedEntity) {
             BaitModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
@@ -50,129 +52,68 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<BaitModel?> Find(BaitModel entity, bool includeNestedObjects = false) {
+        public override async Task<BaitModel?> Find(BaitModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Baits
                 .Where(b => b.BrandId == entity.BrandId && b.BaitTypeId == entity.BaitTypeId && b.Description == entity.Description)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<BaitModel[]> List(BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<BaitModel> baits;
-
-            if (lastEntity == null) {
-                baits = _databaseContext.Baits
-                    .OrderBy(b => b.Description)
-                    .ThenBy(b => b.BrandId)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            } else {
-                baits = _databaseContext.Baits
-                    .Where(b => b.Id > lastEntity.Id)
-                    .OrderBy(b => b.Description)
-                    .ThenBy(b => b.BrandId)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            }
+        public Task<IQueryable<BaitModel>> ListBaitsByBrand(int brandId, bool includeNestedObjects = false) {
+            IQueryable<BaitModel> baits = _databaseContext.Baits
+                .Where(b => b.BrandId == brandId)
+                .OrderBy(b => b.Description)
+                .ThenBy(b => b.BaitTypeId);
 
             if (includeNestedObjects) {
-                return await baits
-                    .Include(b => b.Brand)
-                    .Include(b => b.BaitType)
-                    .ToArrayAsync();
-            } else {
-                return await baits.ToArrayAsync();
+                baits
+                    .Include(b => b.BaitType);
             }
+
+            return (Task<IQueryable<BaitModel>>)baits;
         }
 
-        public async Task<BaitModel[]> ListBaitsByBrand(int brandId, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<BaitModel> baits;
-            
-            if (lastEntity == null) {
-                baits = _databaseContext.Baits
-                    .Where(b => b.BrandId == brandId)
-                    .OrderBy(b => b.Description)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            } else {
-                baits = _databaseContext.Baits
-                    .Where(b => b.BrandId == brandId && b.Id > lastEntity.Id)
-                    .OrderBy(b => b.Description)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            }
+        public Task<IQueryable<BaitModel>> ListBaitsByType(int typeId, bool includeNestedObjects = false) {
+            IQueryable<BaitModel> baits = _databaseContext.Baits
+                .Where(b => b.BaitTypeId == typeId)
+                .OrderBy(b => b.BrandId)
+                .ThenBy(b => b.Description);
 
             if (includeNestedObjects) {
-                return await baits
-                    .Include(b => b.Brand)
-                    .Include(b => b.BaitType)
-                    .ToArrayAsync();
-            } else {
-                return await baits.ToArrayAsync();
+                baits
+                    .Include(b => b.Brand);
             }
+
+            return (Task<IQueryable<BaitModel>>)baits;
         }
 
-        public async Task<BaitModel[]> ListBaitsByDescription(string description, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<BaitModel> baits;
-
-            if (lastEntity == null) {
-                baits = _databaseContext.Baits
-                    .Where(b => b.Description == description)
-                    .OrderBy(b => b.BrandId)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            } else {
-                baits = _databaseContext.Baits
-                    .Where(b => b.Description == description && b.Id > lastEntity.Id)
-                    .OrderBy(b => b.BrandId)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            }
+        public Task<IQueryable<BaitModel>> ListBaitsByDescription(string description, bool includeNestedObjects = false) {
+            IQueryable<BaitModel> baits = _databaseContext.Baits
+                .Where(b => b.Description == description)
+                .OrderBy(b => b.BrandId)
+                .ThenBy(b => b.BaitTypeId);
 
             if (includeNestedObjects) {
-                return await baits
+                baits
                     .Include(b => b.Brand)
-                    .Include(b => b.BaitType)
-                    .ToArrayAsync();
-            } else {
-                return await baits.ToArrayAsync();
+                    .Include(b => b.BaitType);
             }
+
+            return (Task<IQueryable<BaitModel>>)baits;
         }
 
-        public async Task<BaitModel[]> ListBaitsByType(int typeId, BaitModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<BaitModel> baits;
-
-            if (lastEntity == null) {
-                baits = _databaseContext.Baits
-                    .Where(b => b.BaitTypeId == typeId)
-                    .OrderBy(b => b.Description)
-                    .ThenBy(b => b.BrandId)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            } else {
-                baits = _databaseContext.Baits
-                    .Where(b => b.BaitTypeId == typeId && b.Id > lastEntity.Id)
-                    .OrderBy(b => b.Description)
-                    .ThenBy(b => b.BrandId)
-                    .ThenBy(b => b.BaitTypeId)
-                    .ThenBy(b => b.Id)
-                    .Take(pageSize);
-            }
+        public override Task<IQueryable<BaitModel>> ListQuery(bool includeNestedObjects) {
+            IQueryable<BaitModel> baits = _databaseContext.Baits
+                .OrderBy(b => b.BrandId)
+                .ThenBy(b => b.Description)
+                .ThenBy(b => b.BaitTypeId);
 
             if (includeNestedObjects) {
-                return await baits
+                baits
                     .Include(b => b.Brand)
-                    .Include(b => b.BaitType)
-                    .ToArrayAsync();
-            } else {
-                return await baits.ToArrayAsync();
+                    .Include(b => b.BaitType);
             }
+
+            return (Task<IQueryable<BaitModel>>)baits;
         }
     }
 }

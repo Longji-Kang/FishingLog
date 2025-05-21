@@ -6,14 +6,14 @@ namespace Fishing_API.Data.Repositories.Interfaces {
         /*
          * Check currentPage <= totalPages at API level
          */
-        public Task<PageListModel<BaitModel>> ListBaitsByBrand(int brandId, int currentPage, bool includeNestedObjects = false, int pageSize = 20);
+        public Task<IQueryable<BaitModel>> ListBaitsByBrand(int brandId, bool includeNestedObjects = false);
         /*
          * Check currentPage <= totalPages at API level
          */
-        public Task<PageListModel<BaitModel>> ListBaitsByType(int typeId, int currentPage, bool includeNestedObjects = false, int pageSize = 20);
+        public Task<IQueryable<BaitModel>> ListBaitsByType(int typeId, bool includeNestedObjects = false);
         /*
          * Check currentPage <= totalPages at API level
          */
-        public Task<PageListModel<BaitModel>> ListBaitsByDescription(string description, int currentPage, bool includeNestedObjects = false, int pageSize = 20);
+        public Task<IQueryable<BaitModel>> ListBaitsByDescription(string description, bool includeNestedObjects = false);
     }
 }

@@ -1,13 +1,14 @@
 ﻿using Fishing_API.Data.DBContexts;
+using Fishing_API.Data.Repositories.Abstracts;
 using Fishing_API.Data.Repositories.Interfaces;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class DamRepository(DatabaseContext databaseContext) : IDamRepository {
+    public class DamRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<DamModel>, IDamRepository {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
-        public async Task<DamModel?> Add(DamModel entity) {
+        public override async Task<DamModel?> Add(DamModel entity) {
             if (Find(entity) == null) {
                 DamModel dbEntry = (await _databaseContext.Dam.AddAsync(entity)).Entity;
                 await _databaseContext.SaveChangesAsync();
@@ -18,60 +19,37 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<DamModel?> Find(DamModel entity, bool includeNestedObjects = false) {
+        public override async Task<DamModel?> Find(DamModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Dam
                 .Where(d => d.Name == entity.Name && d.ProvinceId == entity.ProvinceId)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<DamModel[]> List(DamModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<DamModel> dams;
-
-            if (lastEntity == null) {
-                dams = _databaseContext.Dam
-                    .OrderBy(d => d.ProvinceId)
-                    .ThenBy(d => d.Name)
-                    .Take(pageSize);
-            } else {
-                dams = _databaseContext.Dam
-                    .Where(d => d.Id > lastEntity.Id)
-                    .OrderBy(d => d.ProvinceId)
-                    .ThenBy(d => d.Name)
-                    .Take(pageSize);
-            }
-
-            if (includeNestedObjects) {
-                dams.Include(d => d.Province);
-            } 
-
-            return await dams.ToArrayAsync();
-        }
-
-        public async Task<DamModel[]> ListByProvince(int provinceId, DamModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<DamModel> dams;
-
-            if (lastEntity == null) {
-                dams = _databaseContext.Dam
-                    .Where(d => d.ProvinceId == provinceId)
-                    .OrderBy(d => d.ProvinceId)
-                    .ThenBy(d => d.Name)
-                    .Take(pageSize);
-            } else {
-                dams = _databaseContext.Dam
-                    .Where(d => d.ProvinceId == provinceId && d.Id > lastEntity.Id)
-                    .OrderBy(d => d.ProvinceId)
-                    .ThenBy(d => d.Name)
-                    .Take(pageSize);
-            }
+        public Task<IQueryable<DamModel>> ListByProvince(int provinceId, bool includeNestedObjects = false) {
+            IQueryable<DamModel> dams = _databaseContext.Dam
+                .Where(d => d.ProvinceId == provinceId)
+                .OrderBy(d => d.Name);
 
             if (includeNestedObjects) {
                 dams.Include(d => d.Province);
             }
 
-            return await dams.ToArrayAsync();
+            return (Task<IQueryable<DamModel>>)dams;
         }
 
-        public async Task<DamModel?> Remove(DamModel entity) {
+        public override Task<IQueryable<DamModel>> ListQuery(bool includeNestedObjects = false) {
+            IQueryable<DamModel> dams = _databaseContext.Dam
+                .OrderBy(d => d.ProvinceId)
+                .ThenBy(d => d.Name);
+
+            if (includeNestedObjects) {
+                dams.Include(d => d.Province);
+            }
+
+            return (Task<IQueryable<DamModel>>)dams;
+        }
+
+        public override async Task<DamModel?> Remove(DamModel entity) {
             DamModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
@@ -84,7 +62,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<DamModel?> Update(DamModel entity, DamModel updatedEntity) {
+        public override async Task<DamModel?> Update(DamModel entity, DamModel updatedEntity) {
             DamModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {

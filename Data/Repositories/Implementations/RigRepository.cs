@@ -1,13 +1,14 @@
 ﻿using Fishing_API.Data.DBContexts;
+using Fishing_API.Data.Repositories.Abstracts;
 using Fishing_API.Data.Repositories.Interfaces;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class RigRepository(DatabaseContext databaseContext) : IFishingRepository<RigsModel> {
+    public class RigRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<RigsModel> {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
-        public async Task<RigsModel?> Add(RigsModel entity) {
+        public override async Task<RigsModel?> Add(RigsModel entity) {
             if (Find(entity) == null) {
                 RigsModel? dbEntry = (await _databaseContext.Rigs.AddAsync(entity)).Entity;
                 await _databaseContext.SaveChangesAsync();
@@ -18,32 +19,18 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<RigsModel?> Find(RigsModel entity, bool includeNestedObjects = false) {
+        public override async Task<RigsModel?> Find(RigsModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Rigs
                 .Where(r => r.RigName == entity.RigName)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<RigsModel[]> List(RigsModel? lastEntity = null, bool includeNestedObjects = false, int pageSize = 10) {
-            IQueryable<RigsModel> rigs;
-
-            if (lastEntity == null) {
-                rigs = _databaseContext.Rigs
-                    .OrderBy(r => r.RigName)
-                    .ThenBy(r => r.Id)
-                    .Take(pageSize);
-            } else {
-                rigs = _databaseContext.Rigs
-                    .Where(r => r.Id > lastEntity.Id)
-                    .OrderBy(r => r.RigName)
-                    .ThenBy(r => r.Id)
-                    .Take(pageSize);
-            }
-            
-            return await rigs.ToArrayAsync();
+        public override Task<IQueryable<RigsModel>> ListQuery(bool includeNestedObjects = false) {
+            return (Task<IQueryable<RigsModel>>)_databaseContext.Rigs
+                .OrderBy(r => r.RigName);
         }
 
-        public async Task<RigsModel?> Remove(RigsModel entity) {
+        public override async Task<RigsModel?> Remove(RigsModel entity) {
             RigsModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
@@ -56,7 +43,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<RigsModel?> Update(RigsModel entity, RigsModel updatedEntity) {
+        public override async Task<RigsModel?> Update(RigsModel entity, RigsModel updatedEntity) {
             RigsModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {

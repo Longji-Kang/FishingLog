@@ -1,11 +1,10 @@
 ﻿using Fishing_API.Data.DBContexts;
-using Fishing_API.Data.Repositories.Interfaces;
-using Fishing_API.Models.ApiModels;
+using Fishing_API.Data.Repositories.Abstracts;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class BaitTypeRepository : IFishingRepository<BaitTypeModel> {
+    public class BaitTypeRepository : FishingInterfaceAbstract<BaitTypeModel> {
 
         private readonly DatabaseContext _databaseContext;
 
@@ -13,7 +12,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             _databaseContext = databaseContext;
         }
 
-        public async Task<BaitTypeModel?> Add(BaitTypeModel entity) {
+        public override async Task<BaitTypeModel?> Add(BaitTypeModel entity) {
             if (Find(entity) == null) {
                 BaitTypeModel dbEntry = (await _databaseContext.BaitTypes.AddAsync(entity)).Entity;
                 await _databaseContext.SaveChangesAsync();
@@ -24,7 +23,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<BaitTypeModel?> Find(BaitTypeModel entity, bool includeNestedObjects = false) {
+        public override async Task<BaitTypeModel?> Find(BaitTypeModel entity, bool includeNestedObjects = false) {
             BaitTypeModel? dbEntry = await _databaseContext.BaitTypes
                 .Where(bt => bt.Type == entity.Type)
                 .FirstOrDefaultAsync();
@@ -32,26 +31,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return dbEntry;
         }
 
-        public async Task<PageListModel<BaitTypeModel>> List(int currentPage, bool includeNestedObjects = false, int pageSize = 20) {
-            IQueryable<BaitTypeModel> type = _databaseContext.BaitTypes
-                .OrderBy(bt => bt.Type);
-
-            int total = (int)(Math.Ceiling((float)(await type.CountAsync()) / pageSize));
-
-            type
-                .Skip((currentPage - 1) * pageSize)
-                .Take(pageSize);
-
-            ICollection<BaitTypeModel> data = await type.ToListAsync();
-
-            return new PageListModel<BaitTypeModel> {
-                CurrentPage = currentPage,
-                TotalPages = total,
-                Data = data
-            };       
-        }
-
-        public async Task<BaitTypeModel?> Remove(BaitTypeModel entity) {
+        public override async Task<BaitTypeModel?> Remove(BaitTypeModel entity) {
             BaitTypeModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
@@ -64,7 +44,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public async Task<BaitTypeModel?> Update(BaitTypeModel entity, BaitTypeModel updatedEntity) {
+        public override async Task<BaitTypeModel?> Update(BaitTypeModel entity, BaitTypeModel updatedEntity) {
             BaitTypeModel? dbEntry = await Find(entity);
 
             if (dbEntry != null) {
@@ -77,6 +57,11 @@ namespace Fishing_API.Data.Repositories.Implementations {
             } else {
                 return null;
             }
+        }
+
+        public override Task<IQueryable<BaitTypeModel>> ListQuery(bool includeNestedObjects = false) {
+            return (Task<IQueryable<BaitTypeModel>>)_databaseContext.BaitTypes
+                .OrderBy(bt => bt.Type);
         }
     }
 }
