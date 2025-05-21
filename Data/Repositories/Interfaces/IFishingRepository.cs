@@ -12,5 +12,23 @@ namespace Fishing_API.Data.Repositories.Interfaces {
          * Check currentPage <= totalPages at API level
          */
         public Task<PageListModel<T>> List(int currentPage, bool includeNestedObjects = false, int pageSize = 20);
+        /*
+         * Default implementation for models with no nested objects
+         */
+        public async Task<PageListModel<T>> List(IQueryable<T> query, int currentPage, int pageSize = 20) {
+            int total = (int)Math.Ceiling((float)await query.CountAsync() / pageSize);
+
+            query
+                .Skip((currentPage - total) * pageSize)
+                .Take(pageSize);
+
+            ICollection<T> data = await query.ToListAsync();
+
+            return new PageListModel<T> {
+                CurrentPage = currentPage,
+                TotalPages = total,
+                Data = data
+            };
+        }
     }
 }
