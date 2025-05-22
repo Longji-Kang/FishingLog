@@ -1,6 +1,5 @@
 ﻿using Fishing_API.Data.DBContexts;
 using Fishing_API.Data.Repositories.Abstracts;
-using Fishing_API.Data.Repositories.Interfaces;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +48,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
                     .Include(l => l.FishSpecie)
                     .Include(l => l.Rigs)
                     .Include(l => l.DamLocation)
+                    .Include(l => l.DamLocation!.Dam)
                     .Include(l => l.Weather);
             }
 
