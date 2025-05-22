@@ -5,7 +5,7 @@ using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class ProvinceRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<ProvinceModel> {
+    public class ProvinceRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<ProvinceModel>, IProvinceRepository {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         /*

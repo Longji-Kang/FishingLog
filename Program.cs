@@ -11,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add database repositories
+builder.Services.AddScoped<>();
+
 var config = builder.Configuration;
 
 var connStrBuilder = config.GetConnectionString("FishingDB");

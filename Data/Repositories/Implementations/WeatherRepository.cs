@@ -5,7 +5,7 @@ using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class WeatherRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<WeatherModel> {
+    public class WeatherRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<WeatherModel>, IWeatherRepository {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         public override async Task<WeatherModel?> Add(WeatherModel entity) {

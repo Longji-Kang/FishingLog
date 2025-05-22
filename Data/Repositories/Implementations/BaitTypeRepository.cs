@@ -1,10 +1,11 @@
 ﻿using Fishing_API.Data.DBContexts;
 using Fishing_API.Data.Repositories.Abstracts;
+using Fishing_API.Data.Repositories.Interfaces;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class BaitTypeRepository : FishingInterfaceAbstract<BaitTypeModel> {
+    public class BaitTypeRepository : FishingInterfaceAbstract<BaitTypeModel>, IBaitTypeRepository {
 
         private readonly DatabaseContext _databaseContext;
 

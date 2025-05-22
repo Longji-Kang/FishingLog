@@ -5,7 +5,7 @@ using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing_API.Data.Repositories.Implementations {
-    public class RigRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<RigsModel> {
+    public class RigRepository(DatabaseContext databaseContext) : FishingInterfaceAbstract<RigsModel>, IRigRepository {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         public override async Task<RigsModel?> Add(RigsModel entity) {

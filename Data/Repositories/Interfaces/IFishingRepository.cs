@@ -1,7 +1,6 @@
 ﻿using Fishing_API.Models.ApiModels;
 
 namespace Fishing_API.Data.Repositories.Interfaces {
-    //TODO revisit paging strategy, current strategy using PK ID won't work when ordering by other fields first
     public interface IFishingRepository<T> {
         public Task<T?> Add(T entity);
         public Task<T?> Remove(T entity);
