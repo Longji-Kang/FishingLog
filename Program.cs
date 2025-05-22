@@ -1,4 +1,4 @@
-using Fishing_API.DB;
+using Fishing_API.Data.DBContexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

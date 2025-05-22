@@ -1,4 +1,4 @@
-﻿using Fishing_API.Models;
+﻿using Fishing_API.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Nodes;
 

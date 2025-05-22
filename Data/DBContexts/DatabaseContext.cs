@@ -1,9 +1,9 @@
-﻿using Fishing_API.Models;
+﻿using Fishing_API.Models.DatabaseModels;
 using Fishing_API.Seeding.Seeders;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Fishing_API.DB {
+namespace Fishing_API.Data.DBContexts {
     public class DatabaseContext : DbContext {
         public DbSet<BaitTypeModel> BaitTypes { get; set; }
         public DbSet<BaitBrandModel> BaitBrands { get; set; }
