@@ -1,4 +1,6 @@
 using Fishing_API.Data.DBContexts;
+using Fishing_API.Data.Repositories.Implementations;
+using Fishing_API.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add database repositories
-
+builder.Services.AddScoped<IBaitBrandRepository, BaitBrandRepository>();
 
 var config = builder.Configuration;
 
