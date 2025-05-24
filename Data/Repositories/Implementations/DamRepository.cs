@@ -25,6 +25,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
+        public override async Task<DamModel?> FindById(int id) {
+            return await _databaseContext.Dam
+                .Where(d => d.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public IQueryable<DamModel> ListByProvince(int provinceId, bool includeNestedObjects = false) {
             IQueryable<DamModel> dams = _databaseContext.Dam
                 .Where(d => d.ProvinceId == provinceId)
@@ -50,7 +56,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<DamModel?> Remove(DamModel entity) {
-            DamModel? dbEntry = await Find(entity);
+            DamModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.Dam.Remove(dbEntry);
@@ -62,12 +68,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<DamModel?> Update(DamModel entity, DamModel updatedEntity) {
-            DamModel? dbEntry = await Find(entity);
+        public override async Task<DamModel?> Update(DamModel updatedEntity) {
+            DamModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
-                dbEntry.Name = entity.Name;
-                dbEntry.ProvinceId = entity.ProvinceId;
+                dbEntry.Name = updatedEntity.Name;
+                dbEntry.ProvinceId = updatedEntity.ProvinceId;
                 dbEntry.Province = updatedEntity.Province;
 
                 _databaseContext.Dam.Update(dbEntry);

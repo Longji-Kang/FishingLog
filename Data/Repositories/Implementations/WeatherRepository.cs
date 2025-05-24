@@ -25,13 +25,19 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
+        public override async Task<WeatherModel?> FindById(int id) {
+            return await _databaseContext.Weather
+                .Where(w => w.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public override IQueryable<WeatherModel> ListQuery(bool includeNestedObjects = false) {
             return _databaseContext.Weather
                 .OrderBy(w => w.Weather);
         }
 
         public override async Task<WeatherModel?> Remove(WeatherModel entity) {
-            WeatherModel? dbEntry = await Find(entity);
+            WeatherModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.Weather.Remove(dbEntry);
@@ -43,8 +49,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<WeatherModel?> Update(WeatherModel entity, WeatherModel updatedEntity) {
-            WeatherModel? dbEntry = await Find(entity);
+        public override async Task<WeatherModel?> Update(WeatherModel updatedEntity) {
+            WeatherModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.Weather = updatedEntity.Weather;

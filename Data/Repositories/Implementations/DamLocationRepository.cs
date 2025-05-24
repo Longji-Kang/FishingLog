@@ -28,6 +28,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
+        public override async Task<DamLocationModel?> FindById(int id) {
+            return await _databaseContext.DamLocations
+                .Where(dl => dl.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public IQueryable<DamLocationModel> ListByDam(int damId, bool includeNestedObjects = false) {
             IQueryable<DamLocationModel> damLocations = _databaseContext.DamLocations
                 .Where(dl => dl.DamId == damId)
@@ -53,7 +59,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<DamLocationModel?> Remove(DamLocationModel entity) {
-            DamLocationModel? dbEntry = await Find(entity);
+            DamLocationModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.Remove(dbEntry);
@@ -65,12 +71,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<DamLocationModel?> Update(DamLocationModel entity, DamLocationModel updatedEntity) {
-            DamLocationModel? dbEntry = await Find(entity);
+        public override async Task<DamLocationModel?> Update(DamLocationModel updatedEntity) {
+            DamLocationModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
-                dbEntry.DamId = entity.DamId;
-                dbEntry.Dam = entity.Dam;
+                dbEntry.DamId = updatedEntity.DamId;
+                dbEntry.Dam = updatedEntity.Dam;
                 dbEntry.Location = updatedEntity.Location;
 
                 _databaseContext.Update(dbEntry);

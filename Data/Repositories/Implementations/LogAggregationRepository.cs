@@ -173,7 +173,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public async override Task<BaitLogRelationModel?> Remove(BaitLogRelationModel entity) {
-            BaitLogRelationModel? dbEntry = await Find(entity);
+            BaitLogRelationModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.Remove(dbEntry);
@@ -185,8 +185,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<BaitLogRelationModel?> Update(BaitLogRelationModel entity, BaitLogRelationModel updatedEntity) {
-            BaitLogRelationModel? dbEntry = await Find(entity);
+        public override async Task<BaitLogRelationModel?> Update(BaitLogRelationModel updatedEntity) {
+            BaitLogRelationModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.BaitId = updatedEntity.BaitId;
@@ -201,6 +201,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
             } else {
                 return null;
             }
+        }
+
+        public override async Task<BaitLogRelationModel?> FindById(int id) {
+            return await _databaseContext.BaitLogRelations
+                .Where(blr => blr.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

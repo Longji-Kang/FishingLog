@@ -21,7 +21,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<BaitModel?> Remove(BaitModel entity) {
-            BaitModel? dbEntry = await Find(entity);
+            BaitModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.Baits.Remove(dbEntry);
@@ -33,8 +33,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<BaitModel?> Update(BaitModel entity, BaitModel updatedEntity) {
-            BaitModel? dbEntry = await Find(entity);
+        public override async Task<BaitModel?> Update(BaitModel updatedEntity) {
+            BaitModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.BrandId = updatedEntity.BrandId;
@@ -114,6 +114,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
 
             return baits;
+        }
+
+        public override async Task<BaitModel?> FindById(int id) {
+            return await _databaseContext.Baits
+                .Where (b => b.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

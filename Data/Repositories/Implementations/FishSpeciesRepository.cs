@@ -25,13 +25,19 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
+        public override async Task<FishSpeciesModel?> FindById(int id) {
+            return await _databaseContext.FishSpecies
+                .Where(f => f.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public override IQueryable<FishSpeciesModel> ListQuery(bool includeNestedObjects = false) {
             return _databaseContext.FishSpecies
                 .OrderBy(f => f.FishSpecie);
         }
 
         public override async Task<FishSpeciesModel?> Remove(FishSpeciesModel entity) {
-            FishSpeciesModel? dbEntry = await Find(entity);
+            FishSpeciesModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.FishSpecies.Remove(dbEntry);
@@ -43,8 +49,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<FishSpeciesModel?> Update(FishSpeciesModel entity, FishSpeciesModel updatedEntity) {
-            FishSpeciesModel? dbEntry = await Find(entity);
+        public override async Task<FishSpeciesModel?> Update(FishSpeciesModel updatedEntity) {
+            FishSpeciesModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.FishSpecie = updatedEntity.FishSpecie;

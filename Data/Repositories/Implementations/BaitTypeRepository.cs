@@ -33,7 +33,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<BaitTypeModel?> Remove(BaitTypeModel entity) {
-            BaitTypeModel? dbEntry = await Find(entity);
+            BaitTypeModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.BaitTypes.Remove(entity);
@@ -45,8 +45,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<BaitTypeModel?> Update(BaitTypeModel entity, BaitTypeModel updatedEntity) {
-            BaitTypeModel? dbEntry = await Find(entity);
+        public override async Task<BaitTypeModel?> Update(BaitTypeModel updatedEntity) {
+            BaitTypeModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.Type = updatedEntity.Type;
@@ -63,6 +63,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
         public override IQueryable<BaitTypeModel> ListQuery(bool includeNestedObjects = false) {
             return _databaseContext.BaitTypes
                 .OrderBy(bt => bt.Type);
+        }
+
+        public override async Task<BaitTypeModel?> FindById(int id) {
+            return await _databaseContext.BaitTypes
+                .Where(bt => bt.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

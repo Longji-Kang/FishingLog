@@ -25,13 +25,19 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .FirstOrDefaultAsync();
         }
 
+        public override async Task<RigsModel?> FindById(int id) {
+            return await _databaseContext.Rigs
+                .Where(r => r.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
         public override IQueryable<RigsModel> ListQuery(bool includeNestedObjects = false) {
             return _databaseContext.Rigs
                 .OrderBy(r => r.RigName);
         }
 
         public override async Task<RigsModel?> Remove(RigsModel entity) {
-            RigsModel? dbEntry = await Find(entity);
+            RigsModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.Rigs.Remove(dbEntry);
@@ -43,8 +49,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<RigsModel?> Update(RigsModel entity, RigsModel updatedEntity) {
-            RigsModel? dbEntry = await Find(entity);
+        public override async Task<RigsModel?> Update(RigsModel updatedEntity) {
+            RigsModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.RigName = updatedEntity.RigName;

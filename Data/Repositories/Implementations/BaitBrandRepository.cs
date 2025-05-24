@@ -13,7 +13,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<BaitBrandModel?> Add(BaitBrandModel entity) {
-            if (Find(entity) == null) {
+            if (await Find(entity) == null) {
                 BaitBrandModel dbEntry = (await _databaseContext.BaitBrands.AddAsync(entity)).Entity;
                 await _databaseContext.SaveChangesAsync();
 
@@ -24,7 +24,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<BaitBrandModel?> Remove(BaitBrandModel entity) {
-            BaitBrandModel? dbEntry = await Find(entity);
+            BaitBrandModel? dbEntry = await FindById(entity.Id);
 
             if (dbEntry != null) {
                 _databaseContext.BaitBrands.Remove(dbEntry);
@@ -36,8 +36,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<BaitBrandModel?> Update(BaitBrandModel entity, BaitBrandModel updatedEntity) {
-            BaitBrandModel? dbEntry = await Find(entity);
+        public override async Task<BaitBrandModel?> Update(BaitBrandModel updatedEntity) {
+            BaitBrandModel? dbEntry = await FindById(updatedEntity.Id);
 
             if (dbEntry != null) {
                 dbEntry.Brand = updatedEntity.Brand;
@@ -62,6 +62,12 @@ namespace Fishing_API.Data.Repositories.Implementations {
         public override IQueryable<BaitBrandModel> ListQuery(bool includeNestedObjects = false) {
             return _databaseContext.BaitBrands
                 .OrderBy(b => b.Brand);
+        }
+
+        public override async Task<BaitBrandModel?> FindById(int id) {
+            return await _databaseContext.BaitBrands
+                .Where(b => b.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }
