@@ -21,7 +21,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<FishSpeciesModel?> Find(FishSpeciesModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.FishSpecies
-                .Where(f => f.FishSpecie == entity.FishSpecie)
+                .Where(f => f.FishSpecie!.ToLower() == entity.FishSpecie!.ToLower())
                 .FirstOrDefaultAsync();
         }
 

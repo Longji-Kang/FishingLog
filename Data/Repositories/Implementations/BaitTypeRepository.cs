@@ -26,7 +26,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<BaitTypeModel?> Find(BaitTypeModel entity, bool includeNestedObjects = false) {
             BaitTypeModel? dbEntry = await _databaseContext.BaitTypes
-                .Where(bt => bt.Type == entity.Type)
+                .Where(bt => bt.Type!.ToLower() == entity.Type!.ToLower())
                 .FirstOrDefaultAsync();
 
             return dbEntry;

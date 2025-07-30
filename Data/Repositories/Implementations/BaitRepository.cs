@@ -54,7 +54,11 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<BaitModel?> Find(BaitModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Baits
-                .Where(b => b.BrandId == entity.BrandId && b.BaitTypeId == entity.BaitTypeId && b.Description == entity.Description)
+                .Where(b =>
+                    b.BrandId == entity.BrandId &&
+                    b.BaitTypeId == entity.BaitTypeId &&
+                   entity.Description!.ToLower() == b.Description!.ToLower()
+                )
                 .FirstOrDefaultAsync();
         }
 
@@ -88,7 +92,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public IQueryable<BaitModel> ListBaitsByDescription(string description, bool includeNestedObjects = false) {
             IQueryable<BaitModel> baits = _databaseContext.Baits
-                .Where(b => b.Description == description)
+                .Where(b => string.Equals(description, b.Description, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(b => b.BrandId)
                 .ThenBy(b => b.BaitTypeId);
 

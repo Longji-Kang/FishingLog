@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 // Add database repositories
 builder.Services.AddScoped<IBaitBrandRepository, BaitBrandRepository>();
+builder.Services.AddScoped<IBaitTypeRepository, BaitTypeRepository>();
 
 var config = builder.Configuration;
 

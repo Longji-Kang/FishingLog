@@ -17,7 +17,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<ProvinceModel?> Find(ProvinceModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Provinces
-                .Where(p => p.ProvinceName == entity.ProvinceName)
+                .Where(p => p.ProvinceName!.ToLower() == entity.ProvinceName!.ToLower())
                 .FirstOrDefaultAsync();
         }
 

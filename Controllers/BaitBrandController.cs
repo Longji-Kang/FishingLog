@@ -3,6 +3,7 @@ using Fishing_API.Models.ApiModels.RequestModels;
 using Fishing_API.Models.ApiModels.ResponseModels;
 using Fishing_API.Models.DatabaseModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Fishing_API.Controllers {
     [Route("api/[controller]")]
@@ -10,10 +11,14 @@ namespace Fishing_API.Controllers {
         private readonly IBaitBrandRepository _brandRepository = brandRepository;
 
         [HttpGet("list")]
-        public async Task<ActionResult<PageListModel<BaitBrandModel>>> List() {
-            IQueryable<BaitBrandModel> query = _brandRepository.ListQuery();
+        public async Task<ActionResult<PageListModel<BaitBrandModel>>> List([FromQuery] PageRequestObject pageRequest) {
+            if (pageRequest.currentPage >= 0 && (pageRequest.currentPage < pageRequest.totalPages || pageRequest.totalPages == null)) {
+                IQueryable<BaitBrandModel> query = _brandRepository.ListQuery();
 
-            return Ok(await _brandRepository.List(query, 1));
+                return Ok(await _brandRepository.List(query, pageRequest.currentPage - 1, pageRequest.pageSize));
+            } else {
+                return BadRequest("Invalid page number provided");
+            }
         }
 
         [HttpGet("find/{brand}")]

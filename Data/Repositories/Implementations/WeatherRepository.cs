@@ -21,7 +21,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<WeatherModel?> Find(WeatherModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Weather
-                .Where(w => w.Weather == entity.Weather)
+                .Where(w => w.Weather!.ToLower() == entity.Weather!.ToLower())
                 .FirstOrDefaultAsync();
         }
 

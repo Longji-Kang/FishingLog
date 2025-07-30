@@ -22,8 +22,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
         public override async Task<DamLocationModel?> Find(DamLocationModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.DamLocations
                 .Where(dl => 
-                    dl.DamId == entity.DamId
-                    && dl.Location == entity.Location
+                    dl.DamId == entity.DamId && 
+                    dl.Location!.ToLower() == entity.Location!.ToLower()
                 )
                 .FirstOrDefaultAsync();
         }

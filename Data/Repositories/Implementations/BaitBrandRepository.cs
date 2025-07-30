@@ -53,7 +53,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<BaitBrandModel?> Find(BaitBrandModel entity, bool includeNestedObjects = false) {
             BaitBrandModel? baitBrand = await _databaseContext.BaitBrands
-                .Where(b => b.Brand == entity.Brand)
+                .Where(b => b.Brand!.ToLower() == entity.Brand!.ToLower())
                 .FirstOrDefaultAsync();
 
             return baitBrand;

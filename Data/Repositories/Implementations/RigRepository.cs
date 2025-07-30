@@ -21,7 +21,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public override async Task<RigsModel?> Find(RigsModel entity, bool includeNestedObjects = false) {
             return await _databaseContext.Rigs
-                .Where(r => r.RigName == entity.RigName)
+                .Where(r => r.RigName!.ToLower() == entity.RigName!.ToLower())
                 .FirstOrDefaultAsync();
         }
 

@@ -1,6 +1,7 @@
 ﻿using Fishing_API.Data.Repositories.Interfaces;
 using Fishing_API.Models.ApiModels.ResponseModels;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Fishing_API.Data.Repositories.Abstracts {
     public abstract class FishingInterfaceAbstract<T> : IFishingRepository<T> {
@@ -8,19 +9,20 @@ namespace Fishing_API.Data.Repositories.Abstracts {
         public abstract Task<T?> Find(T entity, bool includeNestedObjects = false);
         public abstract IQueryable<T> ListQuery(bool includeNestedObjects = false);
         public abstract Task<T?> Remove(T entity);
-        public abstract Task<T?> Update(T updatedEntity);
+        public abstract Task<T?> Update(T updatedEntity);     
         public async Task<PageListModel<T>> List(IQueryable<T> query, int currentPage, int pageSize = 20) {
             int total = (int)Math.Ceiling((float)await query.CountAsync() / pageSize);
 
-            query
-                .Skip((currentPage - total) * pageSize)
+            IQueryable<T> pagedQuery = query
+                .Skip((total - (total - currentPage)) * pageSize)
                 .Take(pageSize);
 
-            ICollection<T> data = await query.ToListAsync();
+            ICollection<T> data = await pagedQuery.ToListAsync();
 
             return new PageListModel<T> {
-                CurrentPage = currentPage,
+                CurrentPage = currentPage + 1,
                 TotalPages = total,
+                PageSize = pageSize,
                 Data = data
             };
         }

@@ -30,7 +30,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public IQueryable<BaitLogRelationModel> ListByBaitDescription(string baitDesc, bool includeNestedObjects) {
             IQueryable<BaitLogRelationModel> baitLogs = _databaseContext.BaitLogRelations
-                .Where(blr => blr.Bait!.Description == baitDesc)
+                .Where(blr => blr.Bait!.Description!.ToLower() == baitDesc!.ToLower())
                 .OrderBy(blr => blr.Bait!.BrandId)
                 .ThenBy(blr => blr.Bait!.BaitTypeId)
                 .ThenBy(blr => blr.Log!.DamLocation!.DamId)
@@ -54,6 +54,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
 
         public IQueryable<BaitLogRelationModel> ListByBaitBrand(int brandId, bool includeNestedObjects) {
             IQueryable<BaitLogRelationModel> baitLogs = _databaseContext.BaitLogRelations
+                .Where(blr => blr.Bait!.BrandId == brandId)
                 .OrderBy(blr => blr.Bait!.Description)
                 .ThenBy(blr => blr.Bait!.BaitTypeId)
                 .ThenBy(blr => blr.Log!.DamLocation!.DamId)
