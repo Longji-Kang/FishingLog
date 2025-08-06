@@ -36,8 +36,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .OrderBy(w => w.Weather);
         }
 
-        public override async Task<WeatherModel?> Remove(WeatherModel entity) {
-            WeatherModel? dbEntry = await FindById(entity.Id);
+        public override async Task<WeatherModel?> Remove(int entityId) {
+            WeatherModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.Weather.Remove(dbEntry);

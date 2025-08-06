@@ -12,18 +12,24 @@ namespace Fishing_API.Controllers {
 
         [HttpGet("list")]
         public async Task<ActionResult<PageListModel<BaitBrandModel>>> List([FromQuery] PageRequestObject pageRequest) {
-            if (pageRequest.currentPage >= 0 && (pageRequest.currentPage < pageRequest.totalPages || pageRequest.totalPages == null)) {
+            if (pageRequest.currentPage > 0 && (pageRequest.currentPage <= pageRequest.totalPages || pageRequest.totalPages == null)) {
                 IQueryable<BaitBrandModel> query = _brandRepository.ListQuery();
 
-                return Ok(await _brandRepository.List(query, pageRequest.currentPage - 1, pageRequest.pageSize));
+                PageListModel<BaitBrandModel> result = await _brandRepository.List(query, pageRequest.currentPage - 1, pageRequest.pageSize);
+
+                if (pageRequest.currentPage <= result.TotalPages ) {
+                    return Ok(result);
+                } else {
+                    return BadRequest("Invalid page number provided");
+                }
             } else {
                 return BadRequest("Invalid page number provided");
             }
         }
 
-        [HttpGet("find/{brand}")]
-        public async Task<ActionResult<BaitBrandModel>> Find(string brand) {
-            if (brand.Length > 0) {
+        [HttpGet("search")]
+        public async Task<ActionResult<BaitBrandModel>> Search([FromQuery] string brand) {
+            if (brand.Length > 0 && brand != null) {
                 BaitBrandModel searchModel = new BaitBrandModel();
                 searchModel.Brand = brand;
 
@@ -41,71 +47,73 @@ namespace Fishing_API.Controllers {
 
         [HttpPut("")]
         public async Task<ActionResult<BaitBrandModel>> Add([FromBody] SingleObjectRequests<string> request) {
-            string? name = request.Data;
+            if (request != null) {
+                string? name = request.Data;
 
-            if (name == null || name.Length == 0) {
-                return BadRequest("Name cannot be empty");
-            } else {
-                BaitBrandModel newBrand = new BaitBrandModel();
-                newBrand.Brand = name;
-
-                BaitBrandModel? baitBrandEntity = await _brandRepository.Add(newBrand);
-
-                if (baitBrandEntity != null) {
-                    return Ok(baitBrandEntity);
+                if (name == null || name.Length == 0) {
+                    return BadRequest("Name cannot be empty");
                 } else {
-                    return Conflict("Bait brand was not successfully added since it already exists!");
+                    BaitBrandModel newBrand = new BaitBrandModel();
+                    newBrand.Brand = name;
+
+                    BaitBrandModel? baitBrandEntity = await _brandRepository.Add(newBrand);
+
+                    if (baitBrandEntity != null) {
+                        return Ok(baitBrandEntity);
+                    } else {
+                        return Conflict("Bait brand was not successfully added since it already exists!");
+                    }
                 }
+            } else {
+                return BadRequest("No valid request object passed!");
             }
         }
 
         [HttpPatch("")]
         public async Task<ActionResult<BaitBrandModel>> Update([FromBody] SingleObjectRequests<BaitBrandModel> request) {
-            BaitBrandModel? requestModel = request.Data;
+            if (request != null) {
+                BaitBrandModel? requestModel = request.Data;
 
-            if (requestModel == null) {
-                return BadRequest("Request data cannot be empty!");
-            } else {
-                if (requestModel.Id == 0) {
-                    return BadRequest("Invalid ID specified!");
-                }
-
-                if (requestModel.Brand == null) {
-                    return BadRequest("Brand name cannot be empty!");
-                }
-
-                BaitBrandModel? updatedModel = await _brandRepository.Update(requestModel);
-
-                if (updatedModel != null) {
-                    return Ok(updatedModel);
+                if (requestModel == null) {
+                    return BadRequest("Request data cannot be empty!");
                 } else {
-                    return NotFound("No brands with specified ID found!");
+                    if (requestModel.Id <= 0) {
+                        return BadRequest("Invalid ID specified!");
+                    }
+
+                    if (requestModel.Brand == null) {
+                        return BadRequest("Brand name cannot be empty!");
+                    }
+
+                    BaitBrandModel? updatedModel = await _brandRepository.Update(requestModel);
+
+                    if (updatedModel != null) {
+                        return Ok(updatedModel);
+                    } else {
+                        return NotFound("No brands with specified ID found!");
+                    }
                 }
+            } else {
+                return BadRequest("Request body cannot be empty!");
             }
         }
 
         [HttpDelete("")]
-        public async Task<ActionResult<BaitBrandModel>> Remove([FromBody] SingleObjectRequests<BaitBrandModel> request) {
-            BaitBrandModel? requestModel = request.Data;
-
-            if (requestModel == null) {
-                return BadRequest("Request data cannot be empty!");
-            } else {
-                if (requestModel.Id == 0) {
-                    return BadRequest("Invalid ID specified!");
+        public async Task<ActionResult<BaitBrandModel>> Remove([FromBody] SingleObjectRequests<int> request) {
+            if (request != null) {
+                if (request.Data <= 0) {
+                    return BadRequest("Invalid PK provided!");
                 }
 
-                if (requestModel.Brand == null) {
-                    return BadRequest("Brand name cannot be empty!");
-                }
-
-                BaitBrandModel? deletedModel = await _brandRepository.Remove(requestModel);
+                BaitBrandModel? deletedModel = await _brandRepository.Remove(request.Data);
 
                 if (deletedModel != null) {
                     return Ok(deletedModel);
                 } else {
-                    return NotFound("No brands with specified ID found!");
+                    return NotFound("Brand not found!");
                 }
+            } else {
+                return BadRequest("Request cannot be empty!");
             }
         }
     }

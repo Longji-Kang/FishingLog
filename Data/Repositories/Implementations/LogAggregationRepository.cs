@@ -173,8 +173,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return baitLogs;
         }
 
-        public async override Task<BaitLogRelationModel?> Remove(BaitLogRelationModel entity) {
-            BaitLogRelationModel? dbEntry = await FindById(entity.Id);
+        public async override Task<BaitLogRelationModel?> Remove(int entityId) {
+            BaitLogRelationModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.Remove(dbEntry);

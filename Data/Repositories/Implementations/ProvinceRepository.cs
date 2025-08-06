@@ -35,7 +35,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         /*
          * Provinces won't be removed
          */
-        public override Task<ProvinceModel?> Remove(ProvinceModel entity) {
+        public override Task<ProvinceModel?> Remove(int entityId) {
             throw new NotSupportedException();
         }
 

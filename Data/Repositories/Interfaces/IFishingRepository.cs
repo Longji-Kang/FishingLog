@@ -3,7 +3,7 @@
 namespace Fishing_API.Data.Repositories.Interfaces {
     public interface IFishingRepository<T> {
         public Task<T?> Add(T entity);
-        public Task<T?> Remove(T entity);
+        public Task<T?> Remove(int entityId);
         public Task<T?> Update(T updatedEntity);
         public Task<T?> Find(T entity, bool includeNestedObjects = false);
         public Task<T?> FindById(int id);

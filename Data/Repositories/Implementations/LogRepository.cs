@@ -62,8 +62,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return logs;
         }
 
-        public override async Task<LogModel?> Remove(LogModel entity) {
-            LogModel? dbEntry = await FindById(entity.Id);
+        public override async Task<LogModel?> Remove(int entityId) {
+            LogModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.Remove(dbEntry);

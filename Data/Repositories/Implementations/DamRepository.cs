@@ -58,8 +58,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return dams;
         }
 
-        public override async Task<DamModel?> Remove(DamModel entity) {
-            DamModel? dbEntry = await FindById(entity.Id);
+        public override async Task<DamModel?> Remove(int entityId) {
+            DamModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.Dam.Remove(dbEntry);

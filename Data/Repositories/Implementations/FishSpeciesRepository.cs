@@ -36,8 +36,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .OrderBy(f => f.FishSpecie);
         }
 
-        public override async Task<FishSpeciesModel?> Remove(FishSpeciesModel entity) {
-            FishSpeciesModel? dbEntry = await FindById(entity.Id);
+        public override async Task<FishSpeciesModel?> Remove(int entityId) {
+            FishSpeciesModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.FishSpecies.Remove(dbEntry);

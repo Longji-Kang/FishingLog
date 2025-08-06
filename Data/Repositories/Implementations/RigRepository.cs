@@ -36,8 +36,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
                 .OrderBy(r => r.RigName);
         }
 
-        public override async Task<RigsModel?> Remove(RigsModel entity) {
-            RigsModel? dbEntry = await FindById(entity.Id);
+        public override async Task<RigsModel?> Remove(int entityId) {
+            RigsModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.Rigs.Remove(dbEntry);

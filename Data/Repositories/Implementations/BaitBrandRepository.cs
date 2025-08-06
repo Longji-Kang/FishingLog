@@ -23,8 +23,8 @@ namespace Fishing_API.Data.Repositories.Implementations {
             }
         }
 
-        public override async Task<BaitBrandModel?> Remove(BaitBrandModel entity) {
-            BaitBrandModel? dbEntry = await FindById(entity.Id);
+        public override async Task<BaitBrandModel?> Remove(int entityId) {
+            BaitBrandModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
                 _databaseContext.BaitBrands.Remove(dbEntry);

@@ -14,7 +14,7 @@ namespace Fishing_API.Data.Repositories.Implementations {
         }
 
         public override async Task<BaitTypeModel?> Add(BaitTypeModel entity) {
-            if (Find(entity) == null) {
+            if (await Find(entity) == null) {
                 BaitTypeModel dbEntry = (await _databaseContext.BaitTypes.AddAsync(entity)).Entity;
                 await _databaseContext.SaveChangesAsync();
 
@@ -32,11 +32,11 @@ namespace Fishing_API.Data.Repositories.Implementations {
             return dbEntry;
         }
 
-        public override async Task<BaitTypeModel?> Remove(BaitTypeModel entity) {
-            BaitTypeModel? dbEntry = await FindById(entity.Id);
+        public override async Task<BaitTypeModel?> Remove(int entityId) {
+            BaitTypeModel? dbEntry = await FindById(entityId);
 
             if (dbEntry != null) {
-                _databaseContext.BaitTypes.Remove(entity);
+                _databaseContext.BaitTypes.Remove(dbEntry);
                 await _databaseContext.SaveChangesAsync();
 
                 return dbEntry;
